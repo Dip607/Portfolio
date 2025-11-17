@@ -1,11 +1,30 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import ScrollReveal from '@/components/ScrollReveal';
+import RippleButton from '@/components/RippleButton';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+    }, 2000);
+  };
+
   const contactInfo = [
     {
       icon: Mail,
@@ -67,7 +86,7 @@ const Contact = () => {
           {/* Contact Form */}
           <ScrollReveal animation="slide-left" delay={0.2}>
             <Card className="p-8 border-border">
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
                     Name
@@ -75,7 +94,8 @@ const Contact = () => {
                   <Input
                     id="name"
                     placeholder="Your name"
-                    className="bg-background"
+                    className="bg-background transition-all focus:scale-[1.01]"
+                    required
                   />
                 </div>
                 <div>
@@ -86,7 +106,8 @@ const Contact = () => {
                     id="email"
                     type="email"
                     placeholder="your@email.com"
-                    className="bg-background"
+                    className="bg-background transition-all focus:scale-[1.01]"
+                    required
                   />
                 </div>
                 <div>
@@ -97,16 +118,18 @@ const Contact = () => {
                     id="message"
                     placeholder="Tell me about your project..."
                     rows={5}
-                    className="bg-background resize-none"
+                    className="bg-background resize-none transition-all focus:scale-[1.01]"
+                    required
                   />
                 </div>
-                <Button
+                <RippleButton
                   type="submit"
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                   size="lg"
+                  loading={isSubmitting}
                 >
-                  Send Message
-                </Button>
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </RippleButton>
               </form>
             </Card>
           </ScrollReveal>
