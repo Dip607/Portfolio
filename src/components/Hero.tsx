@@ -1,6 +1,12 @@
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import ParallaxSection from '@/components/ParallaxSection';
+import RippleButton from '@/components/RippleButton';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Hero = () => {
   return (
@@ -22,40 +28,70 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground group">
+            <RippleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground group">
               View My Work
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
-            </Button>
-            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+            </RippleButton>
+            <RippleButton 
+              size="lg" 
+              variant="outline" 
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+              rippleColor="rgba(59, 130, 246, 0.3)"
+            >
               Get In Touch
-            </Button>
+            </RippleButton>
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center justify-center gap-4">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              <Github size={20} />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              <Linkedin size={20} />
-            </a>
-            <a
-              href="mailto:dipan@example.com"
-              className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              <Mail size={20} />
-            </a>
-          </div>
+          <TooltipProvider>
+            <div className="flex items-center justify-center gap-4">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+                  >
+                    <Github size={20} />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View GitHub Profile</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+                  >
+                    <Linkedin size={20} />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Connect on LinkedIn</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href="mailto:dipan@example.com"
+                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+                  >
+                    <Mail size={20} />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Send Email</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </TooltipProvider>
         </div>
       </div>
 

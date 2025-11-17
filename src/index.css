@@ -143,4 +143,16 @@ All colors MUST be HSL.
   .card-hover {
     @apply transition-all duration-300 hover:shadow-xl hover:shadow-primary/10;
   }
+
+  /* Shimmer effect for loading states */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
 }
