@@ -1,5 +1,6 @@
 import { Briefcase } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const Experience = () => {
   const experiences = [
@@ -41,48 +42,52 @@ const Experience = () => {
   return (
     <section id="experience" className="section-padding">
       <div className="section-container">
-        <div className="text-center mb-16 animate-fade-up">
-          <h2 className="heading-lg mb-4">Work Experience</h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            My professional journey in the world of software development
-          </p>
-        </div>
+        <ScrollReveal animation="fade-up">
+          <div className="text-center mb-16">
+            <h2 className="heading-lg mb-4">Work Experience</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
+            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+              My professional journey in the world of software development
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="max-w-4xl mx-auto">
           <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <Card
-                key={index}
-                className="p-8 card-hover border-l-4 border-l-primary animate-fade-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+              <ScrollReveal 
+                key={index} 
+                animation="slide-right" 
+                delay={index * 0.15}
               >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10 mt-1">
-                    <Briefcase className="text-primary" size={24} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                      <div>
-                        <h3 className="text-2xl font-semibold mb-1">{exp.title}</h3>
-                        <p className="text-primary font-medium">{exp.company}</p>
-                      </div>
-                      <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
-                        {exp.period}
-                      </span>
+                <Card className="p-8 card-hover border-l-4 border-l-primary">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10 mt-1">
+                      <Briefcase className="text-primary" size={24} />
                     </div>
-                    <p className="text-muted-foreground mb-4">{exp.description}</p>
-                    <ul className="space-y-2">
-                      {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span className="text-accent mt-1">•</span>
-                          <span className="text-muted-foreground">{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
+                        <div>
+                          <h3 className="text-2xl font-semibold mb-1">{exp.title}</h3>
+                          <p className="text-primary font-medium">{exp.company}</p>
+                        </div>
+                        <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
+                          {exp.period}
+                        </span>
+                      </div>
+                      <p className="text-muted-foreground mb-4">{exp.description}</p>
+                      <ul className="space-y-2">
+                        {exp.achievements.map((achievement, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="text-accent mt-1">•</span>
+                            <span className="text-muted-foreground">{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </ScrollReveal>
             ))}
           </div>
         </div>
