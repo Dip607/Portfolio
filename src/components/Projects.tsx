@@ -2,6 +2,7 @@ import { ExternalLink, Github } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const Projects = () => {
   const projects = [
@@ -34,63 +35,67 @@ const Projects = () => {
   return (
     <section id="projects" className="section-padding bg-secondary/30">
       <div className="section-container">
-        <div className="text-center mb-16 animate-fade-up">
-          <h2 className="heading-lg mb-4">Featured Projects</h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Some of my recent work that showcases my skills and passion for development
-          </p>
-        </div>
+        <ScrollReveal animation="fade-up">
+          <div className="text-center mb-16">
+            <h2 className="heading-lg mb-4">Featured Projects</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
+            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+              Some of my recent work that showcases my skills and passion for development
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <Card
-              key={index}
-              className="overflow-hidden card-hover border-border group animate-fade-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+            <ScrollReveal 
+              key={index} 
+              animation="fade-up" 
+              delay={index * 0.1}
             >
-              <div className="relative overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4 gap-2">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="bg-background/90 hover:bg-background"
-                  >
-                    <Github size={16} className="mr-2" />
-                    Code
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="bg-primary hover:bg-primary/90"
-                  >
-                    <ExternalLink size={16} className="mr-2" />
-                    Demo
-                  </Button>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                <p className="text-muted-foreground mb-4 line-clamp-3">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, tagIndex) => (
-                    <Badge
-                      key={tagIndex}
+              <Card className="overflow-hidden card-hover border-border group h-full">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4 gap-2">
+                    <Button
+                      size="sm"
                       variant="secondary"
-                      className="text-xs bg-primary/10"
+                      className="bg-background/90 hover:bg-background"
                     >
-                      {tag}
-                    </Badge>
-                  ))}
+                      <Github size={16} className="mr-2" />
+                      Code
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      <ExternalLink size={16} className="mr-2" />
+                      Demo
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </Card>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                  <p className="text-muted-foreground mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag, tagIndex) => (
+                      <Badge
+                        key={tagIndex}
+                        variant="secondary"
+                        className="text-xs bg-primary/10"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+            </ScrollReveal>
           ))}
         </div>
       </div>
