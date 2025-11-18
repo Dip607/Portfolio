@@ -57,14 +57,14 @@ const Navigation = () => {
               </a>
             ))}
             <a 
-  href="/resume.pdf" // 👈 Set the path to your PDF file here
-  target="_blank"                 // Optional: Opens the PDF in a new tab
-  rel="noopener noreferrer"       // Recommended for security when using target="_blank"
->
-  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-    Resume
-  </Button>
-</a>
+              href="/resume.pdf" // 👈 Set the path to your PDF file here
+              target="_blank"                 // Optional: Opens the PDF in a new tab
+              rel="noopener noreferrer"       // Recommended for security when using target="_blank"
+            >
+             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              Resume
+             </Button>
+            </a>
           </div>
 
           {/* Mobile Button */}
