@@ -1,6 +1,7 @@
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import ParallaxSection from '@/components/ParallaxSection';
 import RippleButton from '@/components/RippleButton';
+import FloatingShapes from '@/components/FloatingShapes';
 import {
   Tooltip,
   TooltipContent,
@@ -11,6 +12,7 @@ import {
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20">
+      <FloatingShapes />
       <div className="section-container">
         <div className="max-w-4xl mx-auto text-center animate-fade-up">
           <div className="mb-6">
