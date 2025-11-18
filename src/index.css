@@ -79,7 +79,19 @@ All colors MUST be HSL.
     --ring: 220 90% 56%;
   }
 }
+/* Custom Cyberpunk Background Animation */
+@keyframes pulse-light {
+  0%, 100% {
+    opacity: 0.08; /* Slightly less visible */
+  }
+  50% {
+    opacity: 0.15; /* A subtle shimmer/glow */
+  }
+}
 
+.animate-pulse-light {
+  animation: pulse-light 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 @layer base {
   * {
     @apply border-border;

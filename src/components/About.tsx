@@ -22,10 +22,16 @@ const About = () => {
   ];
 
   return (
-    // ✨ MODIFIED: Added font-mono class here to match the Hero component's style.
-    // Replace 'font-mono' with 'font-cyberpunk' if you configured a custom font.
-    <section id="about" className="section-padding relative font-mono">
-      <div className="section-container">
+    // ✨ MODIFIED: Added a darker background for the section to better contrast with retro elements
+    // and applied the font-mono class.
+    <section id="about" className="section-padding relative font-mono bg-gray-50 overflow-hidden">
+      
+      {/* 🌟 RETRO COMPONENT 1: Fading Vaporwave Gradients */}
+      <div className="absolute top-10 left-0 w-64 h-64 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob"></div>
+      <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2s"></div>
+      <div className="absolute top-1/2 left-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-4s"></div>
+      
+      <div className="section-container relative z-10">
         <ScrollReveal animation="fade-up">
           <div className="text-center mb-16">
             <h2 className="heading-lg mb-4">About Me</h2>
@@ -59,17 +65,22 @@ const About = () => {
                 animation="slide-left" 
                 delay={0.3 + index * 0.1}
               >
-                <Card className="p-6 card-hover border-border bg-card">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10">
-                      <item.icon className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                      <p className="text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
-                </Card>
+                {/* 🌟 RETRO COMPONENT 2: Subtle Border Glow on Card */}
+                <div className="relative group">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-lg opacity-0 group-hover:opacity-50 transition duration-300 blur-sm"></div>
+                    
+                    <Card className="relative p-6 card-hover border-border bg-card">
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 rounded-lg bg-primary/10">
+                          <item.icon className="text-primary" size={24} />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                          <p className="text-muted-foreground">{item.description}</p>
+                        </div>
+                      </div>
+                    </Card>
+                </div>
               </ScrollReveal>
             ))}
           </div>
