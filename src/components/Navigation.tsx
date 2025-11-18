@@ -175,12 +175,12 @@ const Navigation = () => {
       {/* Mobile Menu Dropdown with SOLID Background */}
       {isMobileMenuOpen && (
         <div className="md:hidden px-4 mt-3 animate-fade-in">
-          {/* CHANGED:
-            - Replaced 'bg-background/80 backdrop-blur-xl' with 'bg-background' for solid color.
-            - Removed the internal gradient div.
+          {/* CHANGED: 
+             - Retained 'bg-background' for solid color.
+             - Removed 'border border-border/50' for a truly solid look.
           */}
-          <div className="relative overflow-hidden rounded-2xl **bg-background** shadow-2xl border border-border/50 p-6">
-            {/* The gradient background overlay is removed here for a solid color */}
+          <div className="relative overflow-hidden rounded-2xl **bg-background** shadow-2xl p-6">
+            {/* The gradient background overlay and translucent effects are removed */}
 
             <div className="relative flex flex-col gap-2">
               {navLinks.map((link, index) => {
