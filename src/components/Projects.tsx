@@ -1,5 +1,6 @@
-import { ExternalLink, Github } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
+import { ExternalLink, Github, Star, GitFork } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import ScrollReveal from '@/components/ScrollReveal';
 import RippleButton from '@/components/RippleButton';
@@ -10,33 +11,59 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+interface GitHubRepo {
+  id: number;
+  name: string;
+  description: string | null;
+  html_url: string;
+  homepage: string | null;
+  topics: string[];
+  stargazers_count: number;
+  forks_count: number;
+  language: string | null;
+  updated_at: string;
+  fork: boolean;
+}
+
 const Projects = () => {
-  const projects = [
-    {
-      title: 'E-Commerce Platform',
-      description: 'A full-featured e-commerce platform with payment integration, admin dashboard, and real-time inventory management.',
-      tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop',
-      github: 'https://github.com',
-      demo: 'https://demo.com'
-    },
-    {
-      title: 'Task Management App',
-      description: 'Collaborative task management application with real-time updates, drag-and-drop interface, and team collaboration features.',
-      tags: ['React', 'Firebase', 'Tailwind CSS'],
-      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop',
-      github: 'https://github.com',
-      demo: 'https://demo.com'
-    },
-    {
-      title: 'Weather Dashboard',
-      description: 'Beautiful weather dashboard with forecasts, location search, and detailed weather analytics with interactive charts.',
-      tags: ['TypeScript', 'Next.js', 'API Integration'],
-      image: 'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800&h=500&fit=crop',
-      github: 'https://github.com',
-      demo: 'https://demo.com'
-    }
-  ];
+  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const GITHUB_USERNAME = 'Dip607';
+
+  useEffect(() => {
+    const fetchGitHubRepos = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch repositories');
+        }
+
+        const data: GitHubRepo[] = await response.json();
+        
+        // Filter out forked repos and sort by stars
+        const filteredRepos = data
+          .filter(repo => !repo.fork)
+          .sort((a, b) => b.stargazers_count - a.stargazers_count)
+          .slice(0, 6); // Show top 6 repos
+        
+        setRepos(filteredRepos);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching GitHub repos:', err);
+        setError('Failed to load projects from GitHub');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGitHubRepos();
+  }, []);
 
   return (
     <section id="projects" className="section-padding bg-secondary/30">
@@ -46,82 +73,132 @@ const Projects = () => {
             <h2 className="heading-lg mb-4">Featured Projects</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Some of my recent work that showcases my skills and passion for development
+              Live projects from my GitHub profile (@{GITHUB_USERNAME})
             </p>
           </div>
         </ScrollReveal>
 
+        {loading && (
+          <div className="text-center py-12">
+            <div className="inline-block w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-muted-foreground">Loading projects from GitHub...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-destructive">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && repos.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No projects found</p>
+          </div>
+        )}
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {repos.map((repo, index) => (
             <ScrollReveal 
-              key={index} 
+              key={repo.id} 
               animation="fade-up" 
               delay={index * 0.1}
             >
-              <Card className="overflow-hidden card-hover border-border group h-full">
-                <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4 gap-2">
-                    <TooltipProvider>
+              <Card className="overflow-hidden card-hover border-border group h-full flex flex-col">
+                <CardHeader>
+                  <CardTitle className="text-2xl flex items-center gap-2 flex-wrap">
+                    <span className="break-all">{repo.name}</span>
+                    {repo.language && (
+                      <Badge variant="outline" className="text-xs font-normal">
+                        {repo.language}
+                      </Badge>
+                    )}
+                  </CardTitle>
+                  <CardDescription className="text-base mt-3 min-h-[3rem]">
+                    {repo.description || 'No description available'}
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent className="mt-auto">
+                  {repo.topics.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {repo.topics.slice(0, 5).map((topic, topicIndex) => (
+                        <Badge key={topicIndex} variant="secondary" className="text-xs">
+                          {topic}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Star size={16} />
+                      <span>{repo.stargazers_count}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <GitFork size={16} />
+                      <span>{repo.forks_count}</span>
+                    </div>
+                  </div>
+
+                  <TooltipProvider>
+                    <div className="flex gap-3">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <RippleButton
+                            variant="outline"
                             size="sm"
-                            variant="secondary"
-                            className="bg-background/90 hover:bg-background"
-                            rippleColor="rgba(0, 0, 0, 0.2)"
+                            className="flex-1"
+                            onClick={() => window.open(repo.html_url, '_blank')}
                           >
                             <Github size={16} className="mr-2" />
                             Code
                           </RippleButton>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>View source code</p>
+                          <p>View on GitHub</p>
                         </TooltipContent>
                       </Tooltip>
 
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <RippleButton
-                            size="sm"
-                            className="bg-primary hover:bg-primary/90"
-                          >
-                            <ExternalLink size={16} className="mr-2" />
-                            Demo
-                          </RippleButton>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>View live demo</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, tagIndex) => (
-                      <Badge
-                        key={tagIndex}
-                        variant="secondary"
-                        className="text-xs bg-primary/10"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
+                      {repo.homepage && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <RippleButton
+                              size="sm"
+                              className="flex-1 bg-primary hover:bg-primary/90"
+                              onClick={() => window.open(repo.homepage!, '_blank')}
+                            >
+                              <ExternalLink size={16} className="mr-2" />
+                              Live
+                            </RippleButton>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>View live demo</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
+                  </TooltipProvider>
+                </CardContent>
               </Card>
             </ScrollReveal>
           ))}
         </div>
+
+        {!loading && !error && (
+          <ScrollReveal animation="fade-up" delay={0.4}>
+            <div className="text-center mt-12">
+              <RippleButton
+                variant="outline"
+                size="lg"
+                onClick={() => window.open(`https://github.com/${GITHUB_USERNAME}?tab=repositories`, '_blank')}
+              >
+                <Github size={20} className="mr-2" />
+                View All Projects on GitHub
+              </RippleButton>
+            </div>
+          </ScrollReveal>
+        )}
       </div>
     </section>
   );
