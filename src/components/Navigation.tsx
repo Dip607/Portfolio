@@ -172,12 +172,15 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown with Glassmorphism */}
+      {/* Mobile Menu Dropdown with SOLID Background */}
       {isMobileMenuOpen && (
         <div className="md:hidden px-4 mt-3 animate-fade-in">
-          <div className="relative overflow-hidden rounded-2xl bg-background/80 backdrop-blur-xl shadow-2xl border border-border/50 p-6">
-            {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gradient-start/10 via-gradient-middle/10 to-gradient-end/10" />
+          {/* CHANGED:
+            - Replaced 'bg-background/80 backdrop-blur-xl' with 'bg-background' for solid color.
+            - Removed the internal gradient div.
+          */}
+          <div className="relative overflow-hidden rounded-2xl **bg-background** shadow-2xl border border-border/50 p-6">
+            {/* The gradient background overlay is removed here for a solid color */}
 
             <div className="relative flex flex-col gap-2">
               {navLinks.map((link, index) => {
