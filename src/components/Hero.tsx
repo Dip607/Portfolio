@@ -1,110 +1,99 @@
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
-import ParallaxSection from '@/components/ParallaxSection';
-import RippleButton from '@/components/RippleButton';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ArrowRight, Github, Linkedin, Mail, Zap } from 'lucide-react';
 
-const Hero = () => {
+export default function Hero() {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20">
-      <div className="section-container">
-        <div className="max-w-4xl mx-auto text-center animate-fade-up">
-          <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-secondary rounded-full text-sm font-medium text-primary mb-4">
+    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden">
+      <div className="animated-grid absolute inset-0"></div>
+
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2s"></div>
+      <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4s"></div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+        <div className="text-center animate-fade-in">
+
+          <div className="mb-8 inline-block">
+            <span className="px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 border border-blue-200 rounded-full text-sm font-semibold text-blue-700 backdrop-blur-sm hover:border-blue-300 transition-all duration-300">
               👋 Welcome to my portfolio
             </span>
           </div>
+
           
-          <h1 className="heading-xl mb-6">
-            Hi, I'm <span className="text-gradient">Dipan</span>
+
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight animate-slide-down">
+            Hi, I'm <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-gradient">Dipan</span>
           </h1>
-          
-          <p className="text-xl lg:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+
+          <p className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 max-w-2xl mx-auto animate-slide-up">
             A passionate developer crafting beautiful digital experiences with modern web technologies
           </p>
-          
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-            <RippleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground group">
-              View My Work
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
-            </RippleButton>
-            <RippleButton 
-              size="lg" 
-              variant="outline" 
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-              rippleColor="rgba(59, 130, 246, 0.3)"
+
+          <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed animate-slide-up animation-delay-1s">
+            Full Stack Developer & Creative Problem Solver | Transforming ideas into elegant solutions
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-16 animate-slide-up animation-delay-2s">
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden"
             >
-              Get In Touch
-            </RippleButton>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <span className="relative flex items-center gap-2">
+                View My Work
+                <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
+              </span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="group relative px-8 py-4 bg-white border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-50 hover:border-blue-700 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
+              <span className="relative flex items-center gap-2">
+                Get In Touch
+                <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full group-hover:animate-pulse"></span>
+              </span>
+            </button>
           </div>
 
-          {/* Social Links */}
-          <TooltipProvider>
-            <div className="flex items-center justify-center gap-4">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
-                  >
-                    <Github size={20} />
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>View GitHub Profile</p>
-                </TooltipContent>
-              </Tooltip>
+          <div className="flex items-center justify-center gap-6 animate-slide-up animation-delay-3s">
+            <a
+              href="https://github.com/Dip607"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-full hover:from-blue-600 hover:to-blue-500 hover:text-white hover:shadow-lg hover:scale-110 transition-all duration-300 backdrop-blur-sm"
+            >
+              <Github size={24} className="group-hover:animate-bounce" />
+            </a>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
-                  >
-                    <Linkedin size={20} />
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Connect on LinkedIn</p>
-                </TooltipContent>
-              </Tooltip>
+            <a
+              href="https://www.linkedin.com/in/dipan-mandal-/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-full hover:from-blue-600 hover:to-blue-500 hover:text-white hover:shadow-lg hover:scale-110 transition-all duration-300 backdrop-blur-sm"
+            >
+              <Linkedin size={24} className="group-hover:animate-bounce" />
+            </a>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a
-                    href="mailto:dipan@example.com"
-                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
-                  >
-                    <Mail size={20} />
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Send Email</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          </TooltipProvider>
+            <a
+              href="mailto:dipanmandal111@gmail.com"
+              className="group p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-full hover:from-blue-600 hover:to-blue-500 hover:text-white hover:shadow-lg hover:scale-110 transition-all duration-300 backdrop-blur-sm"
+            >
+              <Mail size={24} className="group-hover:animate-bounce" />
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <ParallaxSection speed={0.3}>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-primary rounded-full flex items-start justify-center p-2">
-            <div className="w-1.5 h-3 bg-primary rounded-full animate-pulse" />
-          </div>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-20">
+        <div className="w-6 h-10 border-2 border-gradient-to-b from-blue-600 to-blue-400 rounded-full flex items-start justify-center p-2 bg-white/50 backdrop-blur-sm">
+          <div className="w-1.5 h-3 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full animate-pulse" />
         </div>
-      </ParallaxSection>
+      </div>
     </section>
   );
-};
-
-export default Hero;
+}
