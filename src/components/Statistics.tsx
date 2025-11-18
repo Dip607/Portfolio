@@ -34,7 +34,9 @@ const Statistics = () => {
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5">
+    // ✨ MODIFIED: Added font-mono class here to match the desired font style.
+    // Replace 'font-mono' with 'font-cyberpunk' if you configured a custom font.
+    <section className="section-padding bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 font-mono">
       <div className="section-container">
         <ScrollReveal animation="fade-up">
           <div className="text-center mb-16">

@@ -34,7 +34,8 @@ const ScrollReveal = ({
     <div
       ref={ref}
       className={cn(
-        'transition-all ease-out',
+        // ✨ MODIFIED: Added font-mono class here.
+        'transition-all ease-out font-mono', 
         !isVisible && animationClasses[animation],
         isVisible && activeClasses,
         className

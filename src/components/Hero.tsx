@@ -7,7 +7,10 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden">
+    // ✨ ADDED: font-mono as a simple, built-in placeholder for a techy feel.
+    // For a real cyberpunk font, replace 'font-mono' with your custom font class
+    // (e.g., 'font-cyberpunk' after configuring tailwind.config.js)
+    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden font-mono">
       <div className="animated-grid absolute inset-0"></div>
 
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>

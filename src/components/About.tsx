@@ -22,7 +22,9 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="section-padding relative">
+    // ✨ MODIFIED: Added font-mono class here to match the Hero component's style.
+    // Replace 'font-mono' with 'font-cyberpunk' if you configured a custom font.
+    <section id="about" className="section-padding relative font-mono">
       <div className="section-container">
         <ScrollReveal animation="fade-up">
           <div className="text-center mb-16">

@@ -47,28 +47,32 @@ export default function Skills() {
   ];
 
   return (
-    <section id="skills" className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
+    <section id="skills" className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden font-mono">
       <div className="animated-grid absolute inset-0"></div>
 
+      {/* --- BACKGROUND BLOBS (Existing) --- */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-0s"></div>
       <div className="absolute top-40 right-10 w-72 h-72 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2s"></div>
       <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-4s"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-20 animate-slide-down">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-blue-100 to-cyan-100 border border-blue-200 rounded-full backdrop-blur-sm">
+          
+          {/* Neon/Glow Badge */}
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-blue-100 to-cyan-100 border border-blue-200 rounded-full backdrop-blur-sm shadow-neon-sm"> 
             <Zap size={16} className="text-blue-600" />
             <span className="text-sm font-semibold text-blue-700">My Technical Arsenal</span>
           </div>
 
           <h2 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6">
-            Skills & <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-gradient">Technologies</span>
+            Skills & <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-gradient **text-shadow-glitch**">Technologies</span>
           </h2>
 
+          {/* Circuitry Divider */}
           <div className="flex justify-center gap-2 mb-8">
-            <div className="w-8 h-1 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full"></div>
-            <div className="w-8 h-1 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"></div>
-            <div className="w-8 h-1 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full"></div>
+            <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-neon-line"></div>
+            <div className="w-2 h-2 bg-blue-500 rotate-45 border border-cyan-300 shadow-neon-dot"></div>
+            <div className="w-20 h-0.5 bg-gradient-to-l from-transparent via-cyan-400 to-transparent shadow-neon-line"></div>
           </div>
 
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -85,19 +89,18 @@ export default function Skills() {
                 className="group relative animate-slide-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                {/* --- CARD DESIGN MODIFICATION --- */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 z-0"></div>
 
-                <div className={`relative bg-gradient-to-br ${category.gradient} backdrop-blur-sm border border-blue-200/50 rounded-2xl p-8 hover:border-blue-300 transition-all duration-500 hover:-translate-y-3 overflow-hidden group`}>
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-3xl"></div>
-                  </div>
-
+                <div className={`relative bg-gradient-to-br ${category.gradient} backdrop-blur-sm border border-blue-200/50 rounded-2xl p-8 hover:border-blue-400 transition-all duration-500 hover:-translate-y-2 overflow-hidden group shadow-md hover:shadow-neon-lg`}>
+                  
+                  {/* Neon Icon Container */}
                   <div className="relative z-10">
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-6 shadow-lg group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
+                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-6 shadow-xl group-hover:shadow-neon-icon transition-all duration-300 group-hover:scale-105`}>
                       <IconComponent className="text-white" size={32} />
                     </div>
 
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-400 group-hover:bg-clip-text transition-all duration-300">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-cyan-300 group-hover:bg-clip-text transition-all duration-300">
                       {category.title}
                     </h3>
 
@@ -105,7 +108,7 @@ export default function Skills() {
                       {category.skills.map((skill, skillIndex) => (
                         <span
                           key={skillIndex}
-                          className="px-4 py-2 bg-white/60 backdrop-blur-md text-gray-700 border border-blue-200/50 rounded-full text-sm font-semibold hover:bg-gradient-to-r hover:from-blue-500 hover:to-cyan-400 hover:text-white hover:border-transparent transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                          className="px-4 py-2 bg-white/60 backdrop-blur-md text-gray-700 border border-blue-200/50 rounded-full text-sm font-semibold hover:bg-gradient-to-r hover:from-blue-500 hover:to-cyan-400 hover:text-white hover:border-transparent transition-all duration-300 hover:scale-105 **hover:shadow-neon-chip**"
                         >
                           {skill}
                         </span>
@@ -113,6 +116,7 @@ export default function Skills() {
                     </div>
                   </div>
 
+                  {/* Corner Flare (Existing, but works well with the theme) */}
                   <div className="absolute -bottom-1 -right-1 w-24 h-24 bg-gradient-to-tl from-blue-400/30 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
               </div>

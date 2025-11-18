@@ -32,17 +32,18 @@ const Experience = () => {
 
   // Helper function to determine card properties based on item type
   const getItemProps = (item) => {
-    // Now all items are 'education', so we apply the desired blue styling directly
+    // Reverted to original styling logic
     return {
-      icon: <GraduationCap className="text-primary" size={24} />, // Changed icon color to primary
-      iconBg: 'bg-primary/10', // Changed icon background to primary/10
-      border: 'border-l-4 border-l-primary', // Changed border color to primary
-      titleColor: 'text-primary', // Changed title color to primary
+      icon: <GraduationCap className="text-primary" size={24} />,
+      iconBg: 'bg-primary/10',
+      border: 'border-l-4 border-l-primary',
+      titleColor: 'text-primary',
     };
   };
 
   return (
-    <section id="experience" className="section-padding">
+    // ✨ MODIFIED: Only the font-mono class is added to the section.
+    <section id="experience" className="section-padding font-mono">
       <div className="section-container">
         <ScrollReveal animation="fade-up">
           <div className="text-center mb-16">
@@ -58,8 +59,6 @@ const Experience = () => {
           <div className="space-y-8">
             {items.map((item, index) => {
               const { icon, iconBg, border, titleColor } = getItemProps(item);
-              // Since all items are now education, 'isWork' is always false,
-              // and achievements array is empty, so no need to explicitly check 'isWork'
               
               return (
                 <ScrollReveal 
@@ -67,6 +66,7 @@ const Experience = () => {
                   animation="slide-right" 
                   delay={index * 0.15}
                 >
+                  {/* Reverted Card styling to original */}
                   <Card className={`p-8 card-hover ${border}`}> 
                     <div className="flex items-start gap-4">
                       <div className={`p-3 rounded-lg ${iconBg} mt-1`}> 
@@ -87,8 +87,6 @@ const Experience = () => {
                             <p className="text-muted-foreground mb-4">{item.description}</p>
                         )}
                         
-                        {/* If you add 'achievements' to education items in the future,
-                            you might re-enable a check here. For now, it's not needed. */}
                       </div>
                     </div>
                   </Card>

@@ -15,13 +15,12 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock background scroll when menu opens
+  // Lock background scroll when menu opens (reverted to auto since it's no longer fullscreen)
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isMobileMenuOpen]);
+    // We remove the overflow: hidden property for the new mobile box design
+    // as it's not a full page overlay anymore.
+    document.body.style.overflow = "auto"; 
+  }, []);
 
   const navLinks = [
     { href: '#about', label: 'About' },
@@ -30,10 +29,21 @@ const Navigation = () => {
     { href: '#projects', label: 'Projects' },
     { href: '#contact', label: 'Contact' },
   ];
+  
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const id = href.substring(1);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      // ✨ MODIFIED: Added font-mono class
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-mono ${
         isScrolled ? 'bg-background/80 backdrop-blur-lg shadow-sm' : 'bg-transparent'
       }`}
     >
@@ -51,6 +61,7 @@ const Navigation = () => {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
                 className="text-foreground/70 hover:text-primary transition-colors font-medium"
               >
                 {link.label}
@@ -58,8 +69,8 @@ const Navigation = () => {
             ))}
             <a 
               href="/resume.pdf" // 👈 Set the path to your PDF file here
-              target="_blank"                 // Optional: Opens the PDF in a new tab
-              rel="noopener noreferrer"       // Recommended for security when using target="_blank"
+              target="_blank"                 
+              rel="noopener noreferrer"       
             >
              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
               Resume
@@ -70,43 +81,42 @@ const Navigation = () => {
           {/* Mobile Button */}
           <button
             className="md:hidden text-foreground"
-            onClick={() => setIsMobileMenuOpen(true)}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <Menu size={24} />
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* FULLSCREEN SOLID WHITE MOBILE MENU */}
+      {/* MODIFIED: BOX Mobile Menu (Dropdown/Popover style) */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col p-6 animate-fade-in md:hidden">
-
-          {/* Close Button */}
-          <div className="flex justify-end mb-6">
-            <button
-              className="text-black"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <X size={28} />
-            </button>
-          </div>
+        <div 
+          className="absolute top-full right-4 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-2xl p-4 animate-fade-in md:hidden"
+        >
 
           {/* Menu Links */}
-          <div className="flex flex-col gap-6 mt-6">
+          <div className="flex flex-col gap-3">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-black/80 hover:text-primary text-xl font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-black/80 hover:text-primary text-base font-medium p-2 rounded-md hover:bg-gray-50 transition-colors"
+                onClick={(e) => scrollToSection(e, link.href)}
               >
                 {link.label}
               </a>
             ))}
 
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground w-full mt-4">
-              Resume
-            </Button>
+            <a 
+              href="/resume.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-full mt-2"
+            >
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground w-full">
+                Resume
+              </Button>
+            </a>
           </div>
 
         </div>

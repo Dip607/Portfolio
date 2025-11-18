@@ -36,6 +36,8 @@ const Projects = () => {
     const fetchGitHubRepos = async () => {
       try {
         setLoading(true);
+        // NOTE: This fetch call is for mock data demonstration. In a real environment, 
+        // you should handle CORS or use a serverless function to proxy this request if needed.
         const response = await fetch(
           `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`
         );
@@ -66,7 +68,8 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects" className="section-padding bg-secondary/30">
+    // ✨ MODIFIED: Added font-mono class here to match the desired font style.
+    <section id="projects" className="section-padding bg-secondary/30 font-mono">
       <div className="section-container">
         <ScrollReveal animation="fade-up">
           <div className="text-center mb-16">
