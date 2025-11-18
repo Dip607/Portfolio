@@ -1,123 +1,120 @@
 import { Code, Database, Layout, Server, Smartphone, Globe, Zap } from 'lucide-react';
 
-export default function Skills() {
+export default function App() {
   const skillCategories = [
     {
       icon: Layout,
       title: 'Frontend Development',
       skills: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Vue.js'],
-      color: 'from-blue-600 via-blue-500 to-cyan-400',
-      gradient: 'from-blue-500/20 to-cyan-400/20'
+      // Muted blue for a clean accent
+      accentColor: 'text-blue-600',
+      shadowColor: 'shadow-blue-200/50',
+      bgColor: 'bg-blue-50',
     },
     {
       icon: Server,
       title: 'Backend Development',
       skills: ['Node.js', 'Python', 'REST APIs', 'GraphQL', 'Microservices'],
-      color: 'from-blue-500 via-blue-600 to-indigo-500',
-      gradient: 'from-indigo-500/20 to-blue-400/20'
+      accentColor: 'text-indigo-600',
+      shadowColor: 'shadow-indigo-200/50',
+      bgColor: 'bg-indigo-50',
     },
     {
       icon: Database,
       title: 'Database',
       skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Supabase', 'MySQL'],
-      color: 'from-blue-600 via-cyan-500 to-blue-400',
-      gradient: 'from-cyan-500/20 to-blue-400/20'
+      accentColor: 'text-green-600',
+      shadowColor: 'shadow-green-200/50',
+      bgColor: 'bg-green-50',
     },
     {
       icon: Code,
       title: 'Tools & Technologies',
       skills: ['Git', 'Docker', 'AWS', 'CI/CD', 'Webpack'],
-      color: 'from-blue-500 to-purple-500',
-      gradient: 'from-purple-500/20 to-blue-400/20'
+      accentColor: 'text-purple-600',
+      shadowColor: 'shadow-purple-200/50',
+      bgColor: 'bg-purple-50',
     },
     {
       icon: Smartphone,
       title: 'Mobile Development',
       skills: ['React Native', 'PWA', 'Responsive Design', 'iOS', 'Android'],
-      color: 'from-cyan-400 via-blue-500 to-blue-600',
-      gradient: 'from-cyan-400/20 to-blue-500/20'
+      accentColor: 'text-cyan-600',
+      shadowColor: 'shadow-cyan-200/50',
+      bgColor: 'bg-cyan-50',
     },
     {
       icon: Globe,
       title: 'Other Skills',
       skills: ['UI/UX Design', 'Agile/Scrum', 'Testing', 'SEO', 'Performance'],
-      color: 'from-blue-600 to-cyan-400',
-      gradient: 'from-blue-500/20 to-cyan-400/20'
+      accentColor: 'text-gray-600',
+      shadowColor: 'shadow-gray-200/50',
+      bgColor: 'bg-gray-50',
     }
   ];
 
   return (
-    <section id="skills" className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden font-mono">
-      <div className="animated-grid absolute inset-0"></div>
-
-      {/* --- BACKGROUND BLOBS (Existing) --- */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-0s"></div>
-      <div className="absolute top-40 right-10 w-72 h-72 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2s"></div>
-      <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-4s"></div>
+    // Base section uses a clean white background and the monospace font for a tech/code aesthetic
+    <section id="skills" className="py-24 bg-white relative overflow-hidden font-mono">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-20 animate-slide-down">
+        <div className="text-center mb-16">
           
-          {/* Neon/Glow Badge */}
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-blue-100 to-cyan-100 border border-blue-200 rounded-full backdrop-blur-sm shadow-neon-sm"> 
-            <Zap size={16} className="text-blue-600" />
-            <span className="text-sm font-semibold text-blue-700">My Technical Arsenal</span>
+          {/* Clean Badge - high contrast, simple design */}
+          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 border border-gray-300 rounded-full bg-gray-50"> 
+            <Zap size={14} className="text-gray-500" />
+            <span className="text-xs font-medium text-gray-700 uppercase tracking-wider">My Technical Arsenal</span>
           </div>
 
-          <h2 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6">
-            Skills & <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-gradient **text-shadow-glitch**">Technologies</span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">
+            Core <span className="text-blue-600">Competencies</span>
           </h2>
 
-          {/* Circuitry Divider */}
-          <div className="flex justify-center gap-2 mb-8">
-            <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-neon-line"></div>
-            <div className="w-2 h-2 bg-blue-500 rotate-45 border border-cyan-300 shadow-neon-dot"></div>
-            <div className="w-20 h-0.5 bg-gradient-to-l from-transparent via-cyan-400 to-transparent shadow-neon-line"></div>
-          </div>
+          {/* Simple and clean divider */}
+          <div className="w-12 h-1 bg-blue-500 mx-auto rounded-full mb-8"></div>
 
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            A comprehensive toolkit of modern technologies I use to build scalable, performant, and beautiful applications
+          <p className="text-lg text-gray-500 max-w-3xl mx-auto">
+            A comprehensive toolkit of modern technologies I use to build scalable, performant, and beautiful applications.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => {
             const IconComponent = category.icon;
             return (
               <div
                 key={index}
-                className="group relative animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                // Clean card with soft shadow and hover elevation
+                className={`
+                  group relative bg-white border border-gray-200 rounded-xl p-8 transition-all duration-300
+                  shadow-lg ${category.shadowColor}
+                  hover:shadow-xl hover:-translate-y-1 hover:border-blue-400
+                  transform
+                `}
               >
-                {/* --- CARD DESIGN MODIFICATION --- */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 z-0"></div>
+                
+                {/* Clean Icon Container - Subtle color background */}
+                <div className={`w-12 h-12 rounded-full ${category.bgColor} flex items-center justify-center mb-6 border border-gray-100 transition-all duration-300 group-hover:bg-blue-100`}>
+                  <IconComponent className={category.accentColor} size={24} />
+                </div>
 
-                <div className={`relative bg-gradient-to-br ${category.gradient} backdrop-blur-sm border border-blue-200/50 rounded-2xl p-8 hover:border-blue-400 transition-all duration-500 hover:-translate-y-2 overflow-hidden group shadow-md hover:shadow-neon-lg`}>
-                  
-                  {/* Neon Icon Container */}
-                  <div className="relative z-10">
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-6 shadow-xl group-hover:shadow-neon-icon transition-all duration-300 group-hover:scale-105`}>
-                      <IconComponent className="text-white" size={32} />
-                    </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  {category.title}
+                </h3>
 
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-cyan-300 group-hover:bg-clip-text transition-all duration-300">
-                      {category.title}
-                    </h3>
-
-                    <div className="flex flex-wrap gap-3">
-                      {category.skills.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className="px-4 py-2 bg-white/60 backdrop-blur-md text-gray-700 border border-blue-200/50 rounded-full text-sm font-semibold hover:bg-gradient-to-r hover:from-blue-500 hover:to-cyan-400 hover:text-white hover:border-transparent transition-all duration-300 hover:scale-105 **hover:shadow-neon-chip**"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Corner Flare (Existing, but works well with the theme) */}
-                  <div className="absolute -bottom-1 -right-1 w-24 h-24 bg-gradient-to-tl from-blue-400/30 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill, skillIndex) => (
+                    <span
+                      key={skillIndex}
+                      // Clean skill chip design
+                      className={`
+                        px-3 py-1 bg-gray-100 text-gray-700 border border-gray-200 rounded-md text-sm font-medium transition-colors duration-200
+                        group-hover:bg-blue-50 group-hover:text-blue-700
+                      `}
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </div>
             );
