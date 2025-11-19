@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
@@ -15,6 +15,7 @@ const Navigation = () => {
     { href: '#contact', label: 'Contact' },
   ];
 
+  // (Scroll detection and IntersectionObserver logic remains unchanged)
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -34,7 +35,7 @@ const Navigation = () => {
       },
       {
         rootMargin: '-50% 0px -50% 0px',
-        threshold: 0.6,
+        threshold: 0.6, 
       }
     );
 
@@ -49,14 +50,14 @@ const Navigation = () => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [navLinks]); // Depend on navLinks for completeness
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const id = href.substring(1);
     const element = document.getElementById(id);
     if (element) {
-      setActiveSection(id);
+      setActiveSection(id); 
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
@@ -64,174 +65,118 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 font-mono ${
-        isScrolled
-          ? 'py-2'
-          : 'py-4'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-mono ${
+        isScrolled ? 'bg-background/80 backdrop-blur-lg shadow-sm' : 'bg-transparent'
       }`}
     >
-      {/* Floating Container with Glassmorphism */}
-      <div className={`section-container transition-all duration-500 ${isScrolled ? 'px-4' : 'px-4'}`}>
-        <div
-          className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
-            isScrolled
-              ? 'bg-background/70 backdrop-blur-xl shadow-2xl shadow-gradient-start/10 border border-border/50'
-              : 'bg-background/40 backdrop-blur-md border border-border/30'
-          }`}
-        >
-          {/* Animated Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-gradient-start/5 via-gradient-middle/5 to-gradient-end/5 opacity-50" />
-          
-          {/* Bottom Gradient Line */}
-          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gradient-middle to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="section-container">
+        <div className="flex items-center justify-between h-20">
 
-          <div className="relative flex items-center justify-between px-6 py-4">
-            {/* Logo with Gradient */}
-            <a
-              href="#"
-              className="group relative flex items-center gap-2 cursor-pointer"
-            >
-              <Sparkles className="text-gradient-start animate-pulse" size={24} />
-              <span className="text-2xl font-extrabold gradient-text hover:scale-105 transition-transform duration-300">
-                DIPAN
-              </span>
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-gradient-start to-gradient-middle rounded-lg blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 -z-10" />
-            </a>
+          {/* Logo (Cyberpunk Styling Remains) */}
+          <a href="#" 
+            className={`
+              text-3xl font-extrabold relative inline-block cursor-pointer hover:cursor-crosshair // ✨ ADDED cursor
+              bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 
+              text-transparent bg-clip-text 
+              animate-flicker-animation 
+              transition-colors duration-300
+              hover:text-pink-400 hover:scale-105
+            `}
+            style={{ 
+                fontFamily: '"Press Start 2P", cursive',
+                textShadow: '0 0 8px rgba(255, 0, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.3)'
+            }}
+          >
+            DIPAN
+          </a>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link, index) => {
-                const isActive = activeSection === link.href.substring(1);
-                return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={(e) => scrollToSection(e, link.href)}
-                    className="relative group px-4 py-2"
-                    style={{
-                      animation: `fade-in 0.6s ease-out ${index * 0.1}s both`,
-                    }}
-                  >
-                    {/* Hover Background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-gradient-start/10 to-gradient-middle/10 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100" />
-                    
-                    {/* Link Text */}
-                    <span
-                      className={`relative text-sm font-medium transition-all duration-300 ${
-                        isActive
-                          ? 'gradient-text font-bold'
-                          : 'text-foreground/70 group-hover:text-foreground'
-                      }`}
-                    >
-                      {link.label}
-                    </span>
 
-                    {/* Active Indicator */}
-                    {isActive && (
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-gradient-start to-gradient-middle" />
-                    )}
-
-                    {/* Hover Underline */}
-                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-gradient-middle to-gradient-end scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full" />
-                  </a>
-                );
-              })}
-
-              {/* Resume Button with Gradient */}
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
               <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-4"
+                key={link.href}
+                href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
+                className={`
+                  text-foreground/70 transition-all duration-200 relative
+                  hover:text-primary 
+                  hover:-translate-y-[1px]
+                  hover:cursor-crosshair // ✨ ADDED cursor
+                  hover:text-shadow-neon-blue // ✨ ADDED GLOW EFFECT
+                  ${
+                    activeSection === link.href.substring(1)
+                      ? 'text-primary font-bold border-b-2 border-primary text-shadow-neon-pink' // Active Styling + GLOW
+                      : 'font-medium'
+                  }
+                `}
               >
-                <Button className="relative overflow-hidden bg-gradient-to-r from-gradient-start to-gradient-middle hover:from-gradient-middle hover:to-gradient-end text-white font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-gradient-middle/50 border-0">
-                  <span className="relative z-10">Resume</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-gradient-middle to-gradient-end opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                </Button>
+                {link.label}
               </a>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden relative p-2 rounded-lg hover:bg-gradient-start/10 transition-colors duration-300 group"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-expanded={isMobileMenuOpen}
-              aria-label="Toggle menu"
+            ))}
+            <a 
+              href="/resume.pdf"
+              target="_blank"                 
+              rel="noopener noreferrer"
+              className="hover:cursor-crosshair" // ✨ ADDED cursor to the container
             >
-              {/* Button Glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-gradient-start to-gradient-middle rounded-lg blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-              
-              {isMobileMenuOpen ? (
-                <X size={24} className="relative text-foreground" />
-              ) : (
-                <Menu size={24} className="relative text-foreground" />
-              )}
-            </button>
+             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200 hover:scale-[1.03] hover:shadow-neon-blue">
+              Resume
+             </Button>
+            </a>
           </div>
+
+          {/* Mobile Button */}
+          <button
+            className="md:hidden text-foreground hover:cursor-crosshair" // ✨ ADDED cursor
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu-dropdown" 
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown with SOLID Background */}
       {isMobileMenuOpen && (
-        <div className="md:hidden px-4 mt-3 animate-fade-in">
-          {/* CHANGED:
-            - Replaced 'bg-background/80 backdrop-blur-xl' with 'bg-background' for solid color.
-            - Removed the internal gradient div.
-          */}
-          <div className="relative overflow-hidden rounded-2xl **bg-background** shadow-2xl border border-border/50 p-6">
-            {/* The gradient background overlay is removed here for a solid color */}
+        <div 
+          id="mobile-menu-dropdown" 
+          role="menu"               
+          className="absolute top-full right-4 mt-2 w-64 bg-background border border-gray-200 rounded-lg shadow-2xl p-4 animate-fade-in md:hidden"
+        >
 
-            <div className="relative flex flex-col gap-2">
-              {navLinks.map((link, index) => {
-                const isActive = activeSection === link.href.substring(1);
-                return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={(e) => scrollToSection(e, link.href)}
-                    className="relative group"
-                    style={{
-                      animation: `fade-in 0.4s ease-out ${index * 0.05}s both`,
-                    }}
-                  >
-                    <div
-                      className={`relative px-4 py-3 rounded-xl transition-all duration-300 ${
-                        isActive
-                          ? 'bg-gradient-to-r from-gradient-start/20 to-gradient-middle/20 border border-gradient-middle/30'
-                          : 'hover:bg-foreground/5 border border-transparent'
-                      }`}
-                    >
-                      <span
-                        className={`font-medium transition-colors duration-300 ${
-                          isActive ? 'gradient-text' : 'text-foreground/80 group-hover:text-foreground'
-                        }`}
-                      >
-                        {link.label}
-                      </span>
-
-                      {/* Active Indicator */}
-                      {isActive && (
-                        <div className="absolute left-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-gradient-to-b from-gradient-start to-gradient-middle" />
-                      )}
-                    </div>
-                  </a>
-                );
-              })}
-
-              {/* Mobile Resume Button */}
+          {/* Mobile Menu Links */}
+          <div className="flex flex-col gap-3">
+            {navLinks.map((link) => (
               <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4"
+                key={link.href}
+                href={link.href}
+                className={`
+                  p-2 rounded-md transition-colors font-medium hover:cursor-crosshair // ✨ ADDED cursor
+                  ${
+                    activeSection === link.href.substring(1)
+                      ? 'text-primary bg-primary/10' 
+                      : 'text-foreground/80 hover:bg-foreground/5'
+                  }
+                `}
+                onClick={(e) => scrollToSection(e, link.href)}
               >
-                <Button className="w-full bg-gradient-to-r from-gradient-start to-gradient-middle hover:from-gradient-middle hover:to-gradient-end text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-gradient-middle/50 border-0">
-                  Download Resume
-                </Button>
+                {link.label}
               </a>
-            </div>
+            ))}
+
+            <a 
+              href="/resume.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-full mt-2 hover:cursor-crosshair" // ✨ ADDED cursor to the container
+            >
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground w-full">
+                Resume
+              </Button>
+            </a>
           </div>
+
         </div>
       )}
     </nav>

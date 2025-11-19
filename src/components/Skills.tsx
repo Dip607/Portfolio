@@ -67,7 +67,7 @@ export default function App() {
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">
-            Core <span className="text-blue-600">Competencies</span>
+            Skill <span className="text-blue-600">In House</span>
           </h2>
 
           {/* Simple and clean divider */}

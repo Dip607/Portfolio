@@ -22,7 +22,7 @@ const Experience = () => {
     },
     {
       type: 'education',
-      title: 'High School', 
+      title: 'Class 10', 
       company: 'Taranagar Jogendra Nath High School',
       period: 'Jan 2015 – Feb 2021',
       description: 'Grade: A+',
