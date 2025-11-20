@@ -21,6 +21,7 @@ const ScrollReveal = ({ children, animation, delay, className = "" }) => (
 // --- Matrix Rain Background Component ---
 
 const MatrixRainCanvas = () => {
+// ... (MatrixRainCanvas remains unchanged)
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -96,6 +97,7 @@ const MatrixRainCanvas = () => {
 // --- MODERNIZED Loading Screen Component ---
 
 const LoadingScreen = ({ onLoaded }) => {
+// ... (LoadingScreen remains unchanged)
     const [progress, setProgress] = useState(0);
     const [statusMessage, setStatusMessage] = useState("Initializing connection...");
     const [isComplete, setIsComplete] = useState(false);
@@ -256,12 +258,27 @@ export default function App() {
   if (isLoading) {
     return <LoadingScreen onLoaded={() => setIsLoading(false)} />;
   }
+    
+  // Removed the globalFontStyle object here
+    
 
   return (
+    // REMOVED font-mercy from the main div. It will now only rely on the default font (font-sans/font-mono).
     <div className="min-h-screen bg-gray-50">
 
       {/* --- Global Styles & Animations --- */}
       <style>{`
+        /* * 1. @FONT-FACE DEFINITION 
+         * This block loads the font file from the public folder.
+         * The path is relative to the site root (/).
+         */
+        @font-face {
+          font-family: 'Mercy Christole';
+          src: url('/Mercy Christole.ttf') format('truetype');
+          font-weight: 400;
+          font-style: normal;
+        }
+        
         /* Global & Existing Styles */
         @keyframes fade-in { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
@@ -439,7 +456,7 @@ export default function App() {
         }}
       />
 
-      <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden font-mono">
+      <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden">
 
         <MatrixRainCanvas />
 
@@ -459,16 +476,19 @@ export default function App() {
           <div className="text-center animate-fade-in">
 
             <div className="mb-8 inline-block">
+              {/* THIS IS THE ELEMENT YOU WANT TO EXCLUDE - NO font-mercy CLASS APPLIED HERE */}
               <span className="px-5 py-2.5 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-full text-sm font-medium text-blue-700 hover:bg-white hover:border-blue-300 transition-all duration-300 shadow-sm">
                 👋 Welcome to my portfolio
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight animate-slide-down tracking-tight">
+            {/* FONT APPLIED HERE */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight animate-slide-down tracking-tight font-mercy">
               Hi, I'm <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-gradient glitch-text">Dipan</span>
             </h1>
 
-            <p className="text-xl sm:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto animate-slide-up leading-relaxed font-medium">
+            {/* FONT APPLIED HERE */}
+            <p className="text-xl sm:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto animate-slide-up leading-relaxed font-medium font-mercy">
               A passionate developer crafting beautiful digital experiences with modern web technologies
             </p>
             
@@ -492,7 +512,7 @@ export default function App() {
                 onClick={() => scrollToSection('projects')}
                 onMouseEnter={() => setIsWorkGlitching(true)}
                 onMouseLeave={() => setIsWorkGlitching(false)}
-                className="cta-button group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-semibold shadow-lg"
+                className="cta-button group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-semibold shadow-lg font-mercy" // FONT APPLIED HERE
               >
                 <span className={`relative flex items-center gap-2 ${isWorkGlitching ? 'glitch-text' : ''}`}>
                   View My Work
@@ -504,7 +524,7 @@ export default function App() {
                 onClick={() => scrollToSection('contact')}
                 onMouseEnter={() => setIsContactGlitching(true)}
                 onMouseLeave={() => setIsContactGlitching(false)}
-                className="outline-button group px-8 py-4 bg-white/50 backdrop-blur-sm border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:text-cyan-600"
+                className="outline-button group px-8 py-4 bg-white/50 backdrop-blur-sm border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:text-cyan-600 font-mercy" // FONT APPLIED HERE
               >
                 <span className={`relative flex items-center gap-2 z-10 ${isContactGlitching ? 'glitch-text' : ''}`}>
                   Get In Touch

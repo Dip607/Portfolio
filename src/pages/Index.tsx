@@ -13,7 +13,7 @@ import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="relative">
+    <div className="relative font-mercy">
       <AnimatedGrid />
       <Navigation />
       <Hero />

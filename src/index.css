@@ -1,3 +1,5 @@
+/* Your final replacement in the <style> block of App.tsx would use the URL from the font host */
+@import url('https://fonts.host.com/css?family=Mercy+Christole&display=swap'); /* Replace with actual Mercy Christole import if available */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -145,7 +147,14 @@ All colors MUST be HSL.
     animation: pageLoad 0.6s ease-out;
   }
 }
-
+/* src/index.css */
+@font-face {
+  font-family: 'Mercy Christole';
+  /* Change the path to start with a '/' */
+  src: url('/Mercy Christole.ttf') format('ttf'); 
+  font-weight: 400;
+  font-style: normal;
+}
 @layer components {
   .section-container {
     @apply max-w-7xl mx-auto px-6 lg:px-8;

@@ -14,6 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
+        mercy: ['Mercy Christole', 'sans-serif'],
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         display: ['Space Grotesk', 'Inter', 'sans-serif'],
         body: ['Poppins', 'Inter', 'sans-serif'],
