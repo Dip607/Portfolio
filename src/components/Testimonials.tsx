@@ -6,7 +6,7 @@ const Testimonials = () => {
     {
       name: "Anup",
       role: "CEO at TechStart",
-      avatar: "SJ",
+      avatar: "A",
       rating: 5,
       feedback: "The workflow was incredibly efficient. From our initial idea to a fully functional website, everything was delivered with exceptional quality and attention to detail.",
       color: "from-primary to-primary-glow"
@@ -14,7 +14,7 @@ const Testimonials = () => {
     {
       name: "Rohit Agarwal",
       role: "Founder of DesignHub",
-      avatar: "MC",
+      avatar: "RA",
       rating: 5,
       feedback: "Working together felt seamless. The process was transparent, communication was excellent, and the final product exceeded our expectations in both design and functionality.",
       color: "from-accent to-accent-glow"
@@ -22,7 +22,7 @@ const Testimonials = () => {
     {
       name: "Satym",
       role: "Marketing Director",
-      avatar: "EW",
+      avatar: "S",
       rating: 5,
       feedback: "Fast turnaround without compromising quality. The clean code and beautiful design have made our website a powerful tool for our business. Highly recommended!",
       color: "from-primary-glow to-accent"

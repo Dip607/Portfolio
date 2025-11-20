@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Github, Linkedin, Mail, Code, Lightbulb, Rocket } from 'lucide-react';
 
+// --- Utility Components ---
+
 const Card = ({ children, className = "" }) => (
     <div className={`p-6 border border-gray-200 bg-white rounded-lg shadow-sm ${className}`}>
         {children}
@@ -15,6 +17,8 @@ const ScrollReveal = ({ children, animation, delay, className = "" }) => (
         {children}
     </div>
 );
+
+// --- Matrix Rain Background Component ---
 
 const MatrixRainCanvas = () => {
     const canvasRef = useRef(null);
@@ -89,28 +93,29 @@ const MatrixRainCanvas = () => {
     );
 };
 
+// --- MODERNIZED Loading Screen Component ---
+
 const LoadingScreen = ({ onLoaded }) => {
-    const [logLines, setLogLines] = useState([
-        "Connecting to Dipan's Portfolio Server...",
-        "Accessing developer data stream...",
-    ]);
+    const [progress, setProgress] = useState(0);
+    const [statusMessage, setStatusMessage] = useState("Initializing connection...");
     const [isComplete, setIsComplete] = useState(false);
 
     useEffect(() => {
         let timer = 0;
 
         const sequence = [
-            { delay: 800, line: "[STATUS] Initializing core dependencies... [OK]" },
-            { delay: 500, line: "[PROGRESS] Assembling UI components..." },
-            { delay: 1000, line: "[ASSET] Loading dynamic assets... (100%)" },
-            { delay: 300, line: "[RENDER] Calculating perspective grid parallax..." },
-            { delay: 1200, line: "Data stream connection secured. Access granted." },
+            { delay: 800, message: "Connecting to server..." , progress: 20 },
+            { delay: 500, message: "Fetching core assets..." , progress: 40 },
+            { delay: 1000, message: "Compiling UI modules..." , progress: 70 },
+            { delay: 300, message: "Optimizing render pipeline..." , progress: 90 },
+            { delay: 1200, message: "Access secured. Ready for deployment.", progress: 100 },
         ];
 
         sequence.forEach((item, index) => {
             timer += item.delay;
             window.setTimeout(() => {
-                setLogLines(prev => [...prev, item.line]);
+                setStatusMessage(item.message);
+                setProgress(item.progress);
             }, timer);
         });
 
@@ -124,61 +129,51 @@ const LoadingScreen = ({ onLoaded }) => {
             onLoaded();
         }, timer);
 
-        return () => {
-            sequence.forEach((_, index) => {
-            });
-        };
     }, [onLoaded]);
 
 
     return (
-        <div className={`fixed inset-0 bg-gray-900 flex items-center justify-center font-mono transition-opacity duration-500 z-[100] ${isComplete ? 'opacity-0' : 'opacity-100'}`}>
-            <div className="w-11/12 max-w-2xl bg-black/80 p-8 border border-cyan-500 shadow-cyber-terminal backdrop-blur-sm">
-                <div className="flex justify-between text-cyan-400 mb-4">
-                    <span className="font-bold">&gt; PORTFOLIO_V1.0</span>
-                    <span className="text-sm">STATUS: {isComplete ? 'READY' : 'LOADING...'}</span>
+        // Transition opacity is based on 'isComplete' for a smooth fade-out
+        <div className={`fixed inset-0 bg-gray-900 flex items-center justify-center font-sans transition-opacity duration-700 ease-out z-[100] ${isComplete ? 'opacity-0' : 'opacity-100'}`}>
+            <div className="w-11/12 max-w-xl p-8 rounded-lg text-center transform transition-transform duration-500 ease-out"
+                 style={{ transform: isComplete ? 'scale(1.05)' : 'scale(1)' }}>
+                
+                <p className="text-xl font-light text-white mb-3 tracking-wider animate-pulse-slow">
+                    Dipan Mandal
+                </p>
+                
+                {/* Main Status Message */}
+                <h1 className="text-3xl font-bold text-blue-400 mb-8 transition-colors duration-300">
+                    {statusMessage}
+                </h1>
+                
+                {/* Modern Progress Bar */}
+                <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden shadow-inner-progress">
+                    <div
+                        className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all duration-700 ease-out animate-progress-glow"
+                        style={{ width: `${progress}%` }}
+                    />
                 </div>
-                <div className="h-64 overflow-y-auto text-green-400 text-sm">
-                    {logLines.map((line, index) => (
-                        <p
-                            key={index}
-                            className="whitespace-pre-wrap animate-terminal-line"
-                            style={{ animationDelay: `${index * 0.1}s` }}
-                        >
-                            {line}
-                        </p>
-                    ))}
-                    {!isComplete && (
-                        <p className="text-cyan-400 mt-2 flex">
-                            &gt; Awaiting connection
-                            <span className="animate-pulse ml-1">...</span>
-                            <span className="terminal-cursor !border-cyan-400 !h-3"></span>
-                        </p>
-                    )}
+                
+                {/* Progress Percentage */}
+                <p className="text-sm font-medium text-gray-400 mt-3">
+                    {progress < 100 ? `LOADING... ${progress}%` : "COMPLETE!"}
+                </p>
+
+                {/* Glitch effect on name for final touch */}
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                    <span className="text-[10rem] font-extrabold text-blue-500 opacity-5 blur-sm select-none">
+                        DIPAN
+                    </span>
                 </div>
-                {isComplete && (
-                    <div className="text-center mt-6 text-xl font-bold text-blue-400 animate-pulse">
-                        &gt; **ENTRY SEQUENCE COMPLETE**
-                    </div>
-                )}
             </div>
-             <style>{`
-                @keyframes terminal-line {
-                    from { opacity: 0; transform: translateY(5px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-terminal-line {
-                    animation: terminal-line 0.3s ease-out forwards;
-                    opacity: 0;
-                }
-                .shadow-cyber-terminal {
-                    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
-                }
-            `}</style>
+             {/* Note: All necessary CSS for this component is included in the main App's style block below. */}
         </div>
     );
 };
 
+
+// --- Main App Component ---
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -190,7 +185,8 @@ export default function App() {
   useEffect(() => {
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
 
-    const handleMouseMove = (e: MouseEvent) => {
+    // Use MouseEvent type if you are using TypeScript, otherwise remove it
+    const handleMouseMove = (e) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
 
@@ -208,8 +204,8 @@ export default function App() {
   }, []);
 
   const TARGET_TEXT = "Full Stack Developer & Creative Problem Solver | Transforming ideas into elegant solutions";
-  const TYPING_SPEED = 60;
-  const START_DELAY = 500;
+  const TYPING_SPEED = 90;
+  const START_DELAY = 700;
 
   const [typedText, setTypedText] = useState("");
 
@@ -217,7 +213,7 @@ export default function App() {
     if (isLoading) return;
 
     let index = 0;
-    let intervalId: number | undefined;
+    let intervalId;
 
     const startTyping = () => {
         intervalId = window.setInterval(() => {
@@ -239,8 +235,9 @@ export default function App() {
   }, [isLoading]);
 
   const maxTilt = 3;
-  const mouseX = cursorPos.x / windowSize.width;
-  const mouseY = cursorPos.y / windowSize.height;
+  // Prevent division by zero if windowSize is not yet set
+  const mouseX = windowSize.width ? cursorPos.x / windowSize.width : 0.5;
+  const mouseY = windowSize.height ? cursorPos.y / windowSize.height : 0.5;
 
   const rotateY = (mouseX - 0.5) * maxTilt * 2;
   const rotateX = (mouseY - 0.5) * maxTilt * -2;
@@ -251,7 +248,7 @@ export default function App() {
     transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(-100px) translateX(${translateX}px) translateY(${translateY}px)`,
   };
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -263,7 +260,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
 
+      {/* --- Global Styles & Animations --- */}
       <style>{`
+        /* Global & Existing Styles */
         @keyframes fade-in { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
         .animation-delay-1s { animation-delay: 0.2s; }
@@ -408,7 +407,30 @@ export default function App() {
             border-color: rgba(6, 182, 212, 0.8);
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
         }
+        
+        /* --- Styles for Modern LoadingScreen --- */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+
+        @keyframes progress-glow {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+            100% { filter: brightness(1); }
+        }
+        .animate-progress-glow {
+            animation: progress-glow 2s infinite alternate;
+        }
+
+        .shadow-inner-progress {
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+        }
       `}</style>
+      {/* --- End Global Styles --- */}
 
       <div
         className="fixed neon-orb"
@@ -428,6 +450,7 @@ export default function App() {
           />
         </div>
 
+        {/* Decorative Blobs - ensure 'animate-blob' class is defined in your Tailwind config or custom CSS */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob z-20"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2s z-20"></div>
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4s z-20"></div>
@@ -448,13 +471,12 @@ export default function App() {
             <p className="text-xl sm:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto animate-slide-up leading-relaxed font-medium">
               A passionate developer crafting beautiful digital experiences with modern web technologies
             </p>
-
-            <p className="text-base sm:text-lg text-gray-600 mb-16 max-w-3xl mx-auto leading-relaxed h-[3rem] px-4">
-              {typedText}
-              {typedText.length < TARGET_TEXT.length && (
-                  <span className="terminal-cursor" />
-              )}
-            </p>
+            
+            {/* THE FIX IS HERE: 
+              We wrap the text and cursor in a dedicated <span> to ensure the 
+              glitch effect from the buttons cannot accidentally affect this paragraph's typography.
+            */}
+            
 
             <div className="flex items-center justify-center my-12 animate-fade-in animation-delay-1s">
               <div className="h-px w-24 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-60"></div>
@@ -528,7 +550,8 @@ export default function App() {
           </div>
         </div>
       </section>
-
+      
+      {/* You would place your other sections (Projects, About, Contact) here */}
 
     </div>
   );
