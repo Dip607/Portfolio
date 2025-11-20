@@ -224,6 +224,8 @@ const Contact = () => {
                   </button>
                 ))}
               </div>
+              <p className="text-gray-700 font-medium mb-3 mt-4 ">
+                See home page for social link              </p>
             </div>
           </div>
         </ScrollReveal>
