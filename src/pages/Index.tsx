@@ -2,6 +2,8 @@ import AnimatedGrid from '@/components/AnimatedGrid';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
+import WorkFlow from '@/components/WorkFlow';
+import Testimonials from '@/components/Testimonials';
 import Skills from '@/components/Skills';
 import Statistics from '@/components/Statistics';
 import Experience from '@/components/Experience';
@@ -16,6 +18,8 @@ const Index = () => {
       <Navigation />
       <Hero />
       <About />
+      <WorkFlow />
+      <Testimonials />
       <Skills />
       <Statistics />
       <Experience />
