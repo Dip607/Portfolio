@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import { ExternalLink, Github, Star, GitFork, Info } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import ScrollReveal from '@/components/ScrollReveal';
-import RippleButton from '@/components/RippleButton';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import ScrollReveal from './ScrollReveal';
+import RippleButton from './RippleButton';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+} from './ui/tooltip';
 
 interface GitHubRepo {
   id: number;
@@ -42,19 +41,18 @@ const Projects = () => {
         const response = await fetch(
           `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`
         );
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch repositories');
         }
 
         const data: GitHubRepo[] = await response.json();
-        
-        // Filter out forked repos and sort by stars
+
         const filteredRepos = data
           .filter(repo => !repo.fork)
           .sort((a, b) => b.stargazers_count - a.stargazers_count)
-          .slice(0, 6); // Show top 6 repos
-        
+          .slice(0, 6);
+
         setRepos(filteredRepos);
         setError(null);
       } catch (err) {
@@ -68,86 +66,84 @@ const Projects = () => {
     fetchGitHubRepos();
   }, []);
 
-  // Get unique technologies from repos
   const technologies = ['all', ...new Set(repos.map(repo => repo.language).filter(Boolean))];
 
-  // Filter repos based on selected technology
-  const filteredRepos = selectedTech === 'all' 
-    ? repos 
+  const filteredRepos = selectedTech === 'all'
+    ? repos
     : repos.filter(repo => repo.language === selectedTech);
 
   return (
-    <section id="projects" className="section-padding relative overflow-hidden">
-      <div className="absolute inset-0 gradient-mesh opacity-10 pointer-events-none" />
-      
-      <div className="section-container relative z-10">
+    <section id="projects" className="relative py-24 px-6 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 overflow-hidden font-mono">
+      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-sky-200 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse" style={{ animationDelay: '2s' }}></div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <ScrollReveal animation="fade-up">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-              <span className="text-blackß">Featured Projects</span>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-700 bg-clip-text text-transparent">
+              Featured Projects
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
               Live projects from my GitHub profile (@{GITHUB_USERNAME})
             </p>
           </div>
         </ScrollReveal>
 
-        {/* Technology Filter */}
         {!loading && !error && repos.length > 0 && (
           <ScrollReveal animation="fade-up" delay={0.1}>
             <div className="flex flex-col items-center gap-4 mb-12">
-              <p className="text-sm text-muted-foreground font-medium">Filter by Technology</p>
-              <ToggleGroup 
-                type="single" 
-                value={selectedTech} 
-                onValueChange={(value) => value && setSelectedTech(value)}
-                className="flex-wrap justify-center gap-2"
-              >
+              <p className="text-sm text-slate-600 font-medium">Filter by Technology</p>
+              <div className="flex flex-wrap justify-center gap-2">
                 {technologies.map((tech) => (
-                  <ToggleGroupItem 
-                    key={tech} 
-                    value={tech}
-                    className="glass-card px-4 py-2 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground hover-lift"
+                  <button
+                    key={tech}
+                    onClick={() => setSelectedTech(tech)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                      selectedTech === tech
+                        ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg'
+                        : 'bg-white border border-blue-200 text-blue-700 hover:bg-blue-50'
+                    }`}
                   >
                     {tech === 'all' ? 'All Projects' : tech}
-                  </ToggleGroupItem>
+                  </button>
                 ))}
-              </ToggleGroup>
+              </div>
             </div>
           </ScrollReveal>
         )}
 
         {loading && (
           <div className="text-center py-12">
-            <div className="inline-block w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-            <p className="mt-4 text-muted-foreground">Loading projects from GitHub...</p>
+            <div className="inline-block w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-slate-600">Loading projects from GitHub...</p>
           </div>
         )}
 
         {error && (
           <div className="text-center py-12">
-            <p className="text-destructive">{error}</p>
+            <p className="text-red-600">{error}</p>
           </div>
         )}
 
         {!loading && !error && filteredRepos.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">No projects found for this technology</p>
+            <p className="text-slate-600">No projects found for this technology</p>
           </div>
         )}
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredRepos.map((repo, index) => (
-            <ScrollReveal 
-              key={repo.id} 
-              animation="fade-up" 
+            <ScrollReveal
+              key={repo.id}
+              animation="slide-up"
               delay={index * 0.1}
             >
-              <Card className="glass-card group h-full flex flex-col hover-lift overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary-glow opacity-0 group-hover:opacity-100 transition-opacity" />
-                
+              <Card className="relative group bg-white rounded-2xl border border-blue-100 shadow-lg shadow-blue-100/50 hover:shadow-xl hover:shadow-blue-200/70 transition-all duration-300 hover:-translate-y-2 overflow-hidden h-full flex flex-col">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                 <CardHeader className="relative">
-                  <CardTitle className="text-2xl font-display flex items-center gap-2 flex-wrap">
+                  <CardTitle className="text-2xl font-bold flex items-center gap-2 flex-wrap text-slate-800">
                     <span className="break-all">{repo.name}</span>
                     {repo.language && (
                       <Badge variant="secondary" className="text-xs">
@@ -155,7 +151,7 @@ const Projects = () => {
                       </Badge>
                     )}
                   </CardTitle>
-                  <CardDescription className="text-base mt-3 min-h-[3rem] leading-relaxed">
+                  <CardDescription className="text-base mt-3 min-h-[3rem] leading-relaxed text-slate-600">
                     {repo.description || 'No description available'}
                   </CardDescription>
                 </CardHeader>
@@ -171,9 +167,9 @@ const Projects = () => {
                     </div>
                   )}
 
-                  <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-4 mb-4 text-sm text-slate-600">
                     <div className="flex items-center gap-1">
-                      <Star size={16} className="text-accent fill-accent" />
+                      <Star size={16} className="text-cyan-500 fill-cyan-500" />
                       <span>{repo.stargazers_count}</span>
                     </div>
                     <div className="flex items-center gap-1">
@@ -181,9 +177,9 @@ const Projects = () => {
                       <span>{repo.forks_count}</span>
                     </div>
                     <div className="ml-auto text-xs">
-                      {new Date(repo.updated_at).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        year: 'numeric' 
+                      {new Date(repo.updated_at).toLocaleDateString('en-US', {
+                        month: 'short',
+                        year: 'numeric'
                       })}
                     </div>
                   </div>
@@ -201,20 +197,19 @@ const Projects = () => {
                             Details
                           </RippleButton>
                         </DialogTrigger>
-                        <DialogContent className="glass-card border-border max-w-2xl">
+                        <DialogContent className="bg-white rounded-xl border border-blue-100 max-w-2xl">
                           <DialogHeader>
-                            <DialogTitle className="text-2xl font-display text-gradient">
+                            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
                               {repo.name}
                             </DialogTitle>
-                            <DialogDescription className="text-base leading-relaxed pt-2">
+                            <DialogDescription className="text-base leading-relaxed pt-2 text-slate-600">
                               {repo.description || 'No description available'}
                             </DialogDescription>
                           </DialogHeader>
-                          
+
                           <div className="space-y-6 mt-4">
-                            {/* Technologies */}
                             <div>
-                              <h4 className="font-semibold mb-2 text-sm">Technologies</h4>
+                              <h4 className="font-semibold mb-2 text-sm text-slate-800">Technologies</h4>
                               <div className="flex flex-wrap gap-2">
                                 {repo.language && (
                                   <Badge variant="secondary">{repo.language}</Badge>
@@ -225,31 +220,29 @@ const Projects = () => {
                               </div>
                             </div>
 
-                            {/* Stats */}
                             <div>
-                              <h4 className="font-semibold mb-2 text-sm">Project Stats</h4>
+                              <h4 className="font-semibold mb-2 text-sm text-slate-800">Project Stats</h4>
                               <div className="grid grid-cols-2 gap-4">
-                                <div className="glass-card p-3 rounded-lg">
-                                  <div className="flex items-center gap-2 text-accent">
-                                    <Star size={18} className="fill-accent" />
+                                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-3 rounded-lg border border-blue-100">
+                                  <div className="flex items-center gap-2 text-cyan-600">
+                                    <Star size={18} className="fill-cyan-600" />
                                     <span className="font-semibold">{repo.stargazers_count}</span>
                                   </div>
-                                  <p className="text-xs text-muted-foreground mt-1">Stars</p>
+                                  <p className="text-xs text-slate-600 mt-1">Stars</p>
                                 </div>
-                                <div className="glass-card p-3 rounded-lg">
-                                  <div className="flex items-center gap-2">
+                                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-3 rounded-lg border border-blue-100">
+                                  <div className="flex items-center gap-2 text-blue-600">
                                     <GitFork size={18} />
                                     <span className="font-semibold">{repo.forks_count}</span>
                                   </div>
-                                  <p className="text-xs text-muted-foreground mt-1">Forks</p>
+                                  <p className="text-xs text-slate-600 mt-1">Forks</p>
                                 </div>
                               </div>
                             </div>
 
-                            {/* Last Updated */}
                             <div>
-                              <h4 className="font-semibold mb-2 text-sm">Last Updated</h4>
-                              <p className="text-muted-foreground">
+                              <h4 className="font-semibold mb-2 text-sm text-slate-800">Last Updated</h4>
+                              <p className="text-slate-600">
                                 {new Date(repo.updated_at).toLocaleDateString('en-US', {
                                   year: 'numeric',
                                   month: 'long',
@@ -258,7 +251,6 @@ const Projects = () => {
                               </p>
                             </div>
 
-                            {/* Action Buttons */}
                             <div className="flex gap-3 pt-2">
                               <RippleButton
                                 variant="outline"
@@ -328,8 +320,6 @@ const Projects = () => {
           <ScrollReveal animation="fade-up" delay={0.4}>
             <div className="text-center mt-12">
               <RippleButton
-                variant="outline"
-                size="lg"
                 onClick={() => window.open(`https://github.com/${GITHUB_USERNAME}?tab=repositories`, '_blank')}
               >
                 <Github size={20} className="mr-2" />
